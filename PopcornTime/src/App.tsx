@@ -1,11 +1,16 @@
-import "./App.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
-import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
-    <div>
-      <h1 className="text-5xl font-bold">PopcornTime</h1>
+    <div className="bg-surface-a0 h-screen flex flex-col items-center justify-center">
+      <h1
+        className="text-5xl font-bold text-primary-a0"
+        onClick={() => toast.success("Hello")}
+      >
+        PopcornTime
+      </h1>
       <ToastContainer />
     </div>
   );
