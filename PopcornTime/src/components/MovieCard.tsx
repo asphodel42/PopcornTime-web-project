@@ -3,11 +3,15 @@ import "../index.css";
 
 interface Props {
   movie: Movie;
+  onClick: (movie: Movie) => void;
 }
 
-function MovieCard({ movie }: Props) {
+function MovieCard({ movie, onClick }: Props) {
   return (
-    <div className="movie-cd-ct flex flex-col w-full bg-surface-a10 rounded-2xl overflow-hidden duration-300 ease-in-out cursor-pointer hover:scale-105">
+    <div
+      onClick={() => onClick(movie)}
+      className="movie-cd-ct flex flex-col w-full bg-surface-a10 rounded-2xl overflow-hidden duration-300 ease-in-out cursor-pointer hover:scale-105"
+    >
       <div className="movie-cd-img-ct w-full aspect-[2/3] overflow-hidden mb-2">
         <img
           src={movie.posterUrl}
