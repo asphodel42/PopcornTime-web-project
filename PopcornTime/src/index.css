@@ -25,3 +25,8 @@
   --color-surface-tonal-a40: #7f7974;
   --color-surface-tonal-a50: #97938e;
 }
+
+.toast-message {
+  background: #261f17;
+  color: #fff;
+}
