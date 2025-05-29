@@ -1,6 +1,7 @@
 // src/components/MovieModal.tsx
 import { useRef, useEffect } from "react";
 import type { Movie } from "../../types/movie";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   movie: Movie;
@@ -10,6 +11,7 @@ interface Props {
 export default function MovieModal({ movie, onClose }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -30,6 +32,10 @@ export default function MovieModal({ movie, onClose }: Props) {
       '{"event":"command","func":"playVideo","args":""}',
       "*"
     );
+  };
+  const handleBooking = () => {
+    navigate(`/booking/${movie.id}`);
+    onClose();
   };
 
   return (
@@ -97,10 +103,16 @@ export default function MovieModal({ movie, onClose }: Props) {
             </div>
           )}
 
-          <div className="flex justify-end p-4">
+          <div className="w-full flex pb-6 gap-4 mt-6 justify-center">
             <button
-              className="px-4 py-2 bg-primary-a0 text-dark-a0 font-semibold rounded hover:bg-primary-a10 transition"
+              onClick={handleBooking}
+              className="w-1/4 px-4 py-2 bg-primary-a0 text-dark-a0 font-semibold rounded hover:bg-primary-a10 transition cursor-pointer"
+            >
+              Book
+            </button>
+            <button
               onClick={onClose}
+              className="w-1/4 px-4 py-2 bg-surface-a30 text-light-a0 font-semibold rounded hover:bg-surface-a50 transition cursor-pointer"
             >
               Close
             </button>
