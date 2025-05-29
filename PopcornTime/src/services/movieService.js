@@ -1,3 +1,5 @@
+// src/scripts/fetchTopMoviesExtended.ts
+
 import fs from "fs";
 import path from "path";
 import fetch from "node-fetch";
@@ -30,7 +32,36 @@ const genreMap = {
   37: "Western",
 };
 
-async function fetchTopMovies(pages = 5) {
+async function fetchMovieDetails(id) {
+  const [detailsRes, creditsRes, videosRes] = await Promise.all([
+    fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=en-US`),
+    fetch(`${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}&language=en-US`),
+    fetch(`${BASE_URL}/movie/${id}/videos?api_key=${API_KEY}&language=en-US`),
+  ]);
+
+  const details = await detailsRes.json();
+  const credits = await creditsRes.json();
+  const videos = await videosRes.json();
+
+  const trailer = videos.results?.find(
+    (v) => v.type === "Trailer" && v.site === "YouTube"
+  );
+
+  return {
+    budget: details.budget,
+    productionCountries: details.production_countries.map((c) => c.name),
+    cast: credits.cast.slice(0, 5).map((a) => a.name),
+    crew: credits.crew
+      .filter((c) => ["Director", "Writer"].includes(c.job))
+      .map((c) => ({
+        name: c.name,
+        job: c.job,
+      })),
+    trailer: trailer ? `https://www.youtube.com/watch?v=${trailer.key}` : null,
+  };
+}
+
+async function fetchTopMovies(pages = 1) {
   const allMovies = [];
 
   for (let page = 1; page <= pages; page++) {
@@ -38,26 +69,29 @@ async function fetchTopMovies(pages = 5) {
       `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`
     );
     const data = await res.json();
+    for (const movie of data.results) {
+      const extra = await fetchMovieDetails(movie.id);
 
-    const movies = data.results.map((movie) => ({
-      id: movie.id,
-      title: movie.title,
-      description: movie.overview,
-      posterUrl: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-      genreNames: movie.genre_ids.map((id) => genreMap[id] ?? "Unknown"),
-      releaseDate: movie.release_date,
-      rating: movie.vote_average,
-    }));
-
-    allMovies.push(...movies);
+      allMovies.push({
+        id: movie.id,
+        title: movie.title,
+        description: movie.overview,
+        posterUrl: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+        genreNames: movie.genre_ids.map((id) => genreMap[id] ?? "Unknown"),
+        releaseDate: movie.release_date,
+        rating: movie.vote_average,
+        ...extra,
+      });
+    }
   }
 
   return allMovies;
 }
+
 async function saveToJson() {
-  const movies = await fetchTopMovies(10);
+  const movies = await fetchTopMovies(2);
   const outputPath = path.resolve("./src/data", "movies.json");
-  fs.mkdirSync("data", { recursive: true });
+  fs.mkdirSync("src/data", { recursive: true });
   fs.writeFileSync(outputPath, JSON.stringify(movies, null, 2), "utf-8");
 
   console.log(`Saved ${movies.length} movies to ${outputPath}`);
