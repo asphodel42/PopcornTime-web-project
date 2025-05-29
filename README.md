@@ -1,87 +1,78 @@
-🎬 PopcornTime — Cinema Ticket Booking System
+# 🎬 PopcornTime — Cinema Ticket Booking System
 
-A study web application for booking seats in a movie theater. Built with React, TypeScript, and Tailwind CSS. Movie data is fetched from the TMDB API, and booking information is currently stored in LocalStorage.
-🛠️ Tech Stack
-🔹 Frontend
+A study web application for booking seats in a movie theater. Built with **React**, **TypeScript**, and **Tailwind CSS**. Movie data is fetched from the TMDB API, and booking information is currently stored in **LocalStorage**.
 
-React 18
+## 🛠️ Tech Stack
 
-TypeScript
+### 🔹 Frontend
 
-Vite
+- React 18
+- TypeScript
+- Vite
+- React Router DOM
+- Tailwind CSS
+- React Toastify
 
-React Router DOM
+### 🔸 Backend _(Planned)_
 
-Tailwind CSS
+- Firebase (Firestore, Authentication)
 
-React Toastify
-🔸 Backend (Planned)
+## 🚀 Getting Started
 
-Firebase (Firestore, Authentication)
-🚀 Getting Started
+1. Clone the repository:
 
-Clone the repository:
+```bash
 git clone [repository-url]
 cd PopcornTime
+```
 
-Install dependencies:
+2. Install dependencies:
+
+```bash
 npm install
+```
 
-Start the development server:
+3. Start the development server:
+
+```bash
 npm run dev
+```
 
-🔐 Firebase is not integrated yet. All booking data is currently saved in LocalStorage. Firebase integration is planned.
-📦 Core Features
+> 🔐 Firebase is not integrated yet. All booking data is currently saved in LocalStorage. Firebase integration is planned.
 
-Movie listing with detailed information
+## 📦 Core Features
 
-Modal window with trailer, description, rating, budget, and more
+- Movie listing with detailed information
+- Modal window with trailer, description, rating, budget, and more
+- Interactive seat selection in the cinema hall
+- Booking confirmation form with validation (Name, Phone, Email)
+- Notifications using React Toastify
+- Booking data stored in LocalStorage
+- Fully responsive and modern UI
 
-Interactive seat selection in the cinema hall
+## 🧭 Routing
 
-Booking confirmation form with validation (Name, Phone, Email)
+- `/` — Home page with movie listings
+- `/booking/:id` — Seat selection for a specific movie
+- `/confirm/:id` — Booking confirmation form
 
-Notifications using React Toastify
+## 🔮 Roadmap
 
-Booking data stored in LocalStorage
+- Firebase integration
+- User authentication
+- Admin dashboard
+- Movie/session management
+- Review and rating system
+- Search and filtering
+- Pagination
+- Error handling
+- Performance optimization
+- Accessibility improvements (a11y)
 
-Fully responsive and modern UI
-🧭 Routing
+## 🤝 Contributing
 
-/ — Home page with movie listings
-
-/booking/:id — Seat selection for a specific movie
-
-/confirm/:id — Booking confirmation form
-🔮 Roadmap
-
-Firebase integration
-
-User authentication
-
-Admin dashboard
-
-Movie/session management
-
-Review and rating system
-
-Search and filtering
-
-Pagination
-
-Error handling
-
-Performance optimization
-
-Accessibility improvements (a11y)
-🤝 Contributing
-
-Fork this repository
-
-Create a new feature branch
-
-Commit your changes
-
-Push your branch
-
-Submit a Pull Request
+1. Fork this repository
+2. Create a new feature branch
+3. Commit your changes
+4. Push your branch
+5. Submit a Pull Request
